@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Produtos CRUD</title>
   <style>
+    /* Seu CSS permanece igual */
     :root {
       --primary: #0077cc;
       --primary-dark: #005fa3;
@@ -116,17 +117,11 @@
   </form>
 
   <script>
-    const BASE_URL = 'http://3.15.23.12:3000';
-
-    // Teste extra do fetch conforme seu pedido
-    fetch(`${BASE_URL}/produtos`)
-      .then(res => res.json())
-      .then(data => console.log('Produtos carregados:', data))
-      .catch(err => console.error('Erro ao buscar produtos:', err));
+   const apiBaseUrl = 'http://54.197.2.52:3000';
 
     async function buscarProdutos() {
       try {
-        const res = await fetch(`${BASE_URL}/produtos`);
+        const res = await fetch(`${apiBaseUrl}/produtos`);
         if (!res.ok) throw new Error('Erro ao buscar produtos');
         const produtos = await res.json();
         const lista = document.getElementById('produtos-lista');
@@ -160,7 +155,7 @@
       const produto = { name: nome, description: descricao, price: preco };
 
       try {
-        const res = await fetch(`${BASE_URL}/produtos`, {
+        const res = await fetch(`${apiBaseUrl}/produtos`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(produto),
@@ -186,7 +181,7 @@
       }
 
       try {
-        const res = await fetch(`${BASE_URL}/produtos/${id}`, {
+        const res = await fetch(`${apiBaseUrl}/produtos/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: novoNome, description: novaDescricao, price: novoPreco }),
@@ -203,7 +198,7 @@
       if (!confirm('Tem certeza que deseja excluir este produto?')) return;
 
       try {
-        const res = await fetch(`${BASE_URL}/produtos/${id}`, {
+        const res = await fetch(`${apiBaseUrl}/produtos/${id}`, {
           method: 'DELETE',
         });
 
@@ -220,7 +215,7 @@
       e.preventDefault();
       const id = document.getElementById('buscar-id').value;
       try {
-        const res = await fetch(`${BASE_URL}/produtos/${id}`);
+        const res = await fetch(`${apiBaseUrl}/produtos/${id}`);
         if (!res.ok) throw new Error('Produto não encontrado');
         const produto = await res.json();
         alert(`ID: ${id}\nNome: ${produto.name}\nPreço: R$ ${produto.price}\nDescrição: ${produto.description}`);

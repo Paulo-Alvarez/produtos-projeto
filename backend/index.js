@@ -6,7 +6,11 @@ const produtoRoutes = require('./routes/produtoRoutes');
 
 const app = express();
 
-app.use(cors());
+// Configuração CORS: libera só o domínio do front-end (ajuste para o seu URL real)
+app.use(cors({
+  origin: 'http://meusite-produtos.s3-website-us-east-1.amazonaws.com'
+}));
+
 app.use(express.json());
 
 // Rotas da API para produtos
@@ -18,6 +22,8 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+
+// Escuta em 0.0.0.0 para aceitar conexões externas
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
